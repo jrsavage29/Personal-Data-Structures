@@ -1,141 +1,125 @@
 #define CATCH_CONFIG_MAIN
 
-#include "Stack.hpp"
-#include <iostream>
+#include <cstdlib>
+#include <ctime>
 #include "catch.hpp"
+#include <memory>
+#include "LinkedList.hpp"
 
-TEST_CASE("test construction")
+
+TEST_CASE( "Test construction" )
 {
-	Stack<int> s;
-	REQUIRE(s.size() == 0);
-	REQUIRE( s.isEmpty() );
+	INFO( "Hint: Checking basic construction" );
+	ListInterface<int> * ll = new LinkedList<int>();
+	REQUIRE( ll->isEmpty() );
+	REQUIRE( ll->getLength() == 0 );
+	delete ll;
+	
 }
 
-TEST_CASE("Testing Push")
+TEST_CASE( "Test insertion" )
 {
-	Stack<int> s;
-	s.push(1);
-	REQUIRE( s.size() == 1 );
-	REQUIRE( s.isEmpty() == false );
+	ListInterface<int> * ll = new LinkedList<int>();
+	ll->insert(1,24);
+	REQUIRE( ll->isEmpty() == false );
+	REQUIRE( ll->getLength() == 1 );
+	delete ll;
 }
 
-TEST_CASE("Testing Push 2")
+TEST_CASE( "Test big insertion" )
 {
-	Stack<int> s;
-	for(int i = 0; i < 100; i++)
+	ListInterface<int> * ll = new LinkedList<int>();
+	for(int i=1; i < 100; i++)
 	{
-		s.push(i);
+		ll->insert(i,i+1);
 	}
 	
-	REQUIRE( s.size() == 100 );
-	REQUIRE( s.isEmpty() == false );
-}
-
-TEST_CASE("Testing Pop")
-{
-	Stack<int> s;
-	s.push(1);
-	REQUIRE( s.size() == 1 );
-	
-	int poppedval = s.pop();
-	REQUIRE( poppedval == 1 );
-	REQUIRE( s.size() == 0 );
-	REQUIRE( s.isEmpty() );
-}
-
-TEST_CASE("Testing Pop 2 (Invalid case)")
-{
-	Stack<int> s;
-	REQUIRE(s.size() == 0);
-	REQUIRE( s.isEmpty() );
-	
-	REQUIRE(s.pop() == false);
-}
-
-TEST_CASE("Testing Peek")
-{
-	Stack<int> s;
-	REQUIRE(s.size() == 0);
-	REQUIRE( s.isEmpty() );
-	
-	s.push(1);
-	REQUIRE(s.peek() == 1);
-	REQUIRE(s.size() == 1);
+	REQUIRE( ll->isEmpty() == false );
+	REQUIRE( ll->getLength() == 99 );
+	delete ll;
 	
 }
 
-TEST_CASE("Testing Peek 2")
+TEST_CASE( "testing clear" )
 {
-	Stack<int> s;
-	REQUIRE(s.size() == 0);
-	REQUIRE( s.isEmpty() );
-	
-	REQUIRE_THROWS(s.peek());
-}
-
-TEST_CASE("Testing clear")
-{
-	Stack<int> s;
-	REQUIRE(s.size() == 0);
-	REQUIRE( s.isEmpty() );
-	
-	for(int i = 0; i < 100; i++)
+	ListInterface<int> * ll = new LinkedList<int>();
+	for(int i=1; i < 100; i++)
 	{
-		s.push(i);
+		ll->insert(i,i+1);
 	}
 	
-	REQUIRE(s.size() == 100);
+	REQUIRE( ll->isEmpty() == false );
+	REQUIRE( ll->getLength() == 99 );
 	
-	s.clear();
-	REQUIRE(s.size() == 0);
-	REQUIRE( s.isEmpty() );
+	ll->clear();
+	REQUIRE( ll->isEmpty() );
 	
+	delete ll;
+}
+
+TEST_CASE( "testing remove" )
+{
+	ListInterface<int> * ll = new LinkedList<int>();
+	for(int i=1; i < 100; i++)
+	{
+		ll->insert(i,i+1);
+	}
+	
+	REQUIRE( ll->isEmpty() == false );
+	REQUIRE( ll->getLength() == 99 );
+	
+	REQUIRE( ll->getEntry(1) == 2 );
+	
+	ll->remove(1);
+	REQUIRE( ll->getLength() == 98 );
+	
+	delete ll;
 	
 }
 
-TEST_CASE("Testing the copy and swap")
+TEST_CASE( "testing insert and remove" )
 {
-	Stack<int> s;
-	
-	for(int i = 0; i < 100; i++)
-	{
-		s.push(i);
-	}
-	
-	Stack<int> t;
-	
-	t = s;
-	
-	REQUIRE(s.size() == 100);
-	REQUIRE(t.size() == 100);
-	
-	REQUIRE(s.peek() == 99);
-	REQUIRE(t.peek() == 99);
 	
 }
 
-TEST_CASE("Testing the copy and swap 2")
+TEST_CASE( "testing replacing" )
 {
-	Stack<int> s;
-	
-	for(int i = 0; i < 5; i++)
+	ListInterface<int> * ll = new LinkedList<int>();
+	for(int i=1; i < 100; i++)
 	{
-		s.push(i);
+		ll->insert(i,i+1);
 	}
 	
-	Stack<int> t;
+	REQUIRE( ll->isEmpty() == false );
+	REQUIRE( ll->getLength() == 99 );
 	
-	for(int i = 0; i < 100; i++)
+	REQUIRE( ll->getEntry(1) == 2 );
+	
+	ll->replace(1,45);
+	REQUIRE( ll->getEntry(1) == 45 );
+	REQUIRE( ll->getLength() == 99 );
+	
+	delete ll;
+}
+
+TEST_CASE( "testing copy & swap" )
+{
+	ListInterface<int> * ll = new LinkedList<int>();
+	ListInterface<int> * nn = new LinkedList<int>();
+	for(int i=1; i < 100; i++)
 	{
-		t.push(i);
+		ll->insert(i,i+1);
 	}
 	
-	t = s;
+	REQUIRE( ll->isEmpty() == false );
+	REQUIRE( ll->getLength() == 99 );
 	
-	REQUIRE(s.size() == 5);
-	REQUIRE(t.size() == 5);
+	nn = ll;
 	
-	REQUIRE(s.peek() == 4);
-	REQUIRE(t.peek() == 4);
+	REQUIRE( nn->isEmpty() == false );
+	REQUIRE( nn->getLength() == 99 );
 	
+	REQUIRE( ll->getEntry(2) == nn->getEntry(2) );
+	
+	delete ll;
 }
