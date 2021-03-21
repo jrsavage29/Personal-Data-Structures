@@ -1,0 +1,79 @@
+/*
+*  Function: setRealAxis
+*  Purpose: used to set the minimum and maximum value of the real axis. If the
+*  user specifies bounds that are not between[-2,1] then the default values will be used.
+*  
+*  min - the minimum value of the real axis that can take the users' inputs if valid.
+*  max - the maximum value of the real axis that can take the users' inputs if valid.
+*/ 
+bool Mandelbrot::setRealAxis(double realMin, double realMax)
+{
+	
+	if( (realMin >= -2 && realMin <= 1) && realMin != realMax )
+	{
+		this-> realMin = realMin;
+		return true;
+	}
+	
+	else if( (realMin <= -2 || realMin >= 1) || realMin == realMax)
+	{
+		return false;
+	}
+	
+	if( (realMax >= -2 && realMax <= 1 ) && realMax != realMin )
+	{
+			
+		this-> realMax = realMax;
+		return true;
+	}
+	
+	else if( (realMax <= -2 || realMax >= 1 ) || realMax == realMin)
+	{
+		return false;
+	}
+	
+	else
+	{
+		return false;
+	}
+}
+
+/*
+*  Function: setComplexAxis
+*  Purpose: used to set the minimum and maximum value of the imaginary axis. If the
+*  user specifies bounds that are not between[-1,1] then the default values will be used.
+*  
+*  min - the minimum value of the imaginary axis that can take the users' inputs if valid.
+*  max - the maximum value of the imaginary axis that can take the users' inputs if valid.
+*/
+bool Mandelbrot::setComplexAxis(double imaginaryMin, double imaginaryMax)
+{
+	if( ( imaginaryMin >= -1 && imaginaryMin <= 1 ) && imaginaryMin != imaginaryMax )
+	{
+		this-> imaginaryMin = imaginaryMin;
+		return true;
+	}
+	
+	else if( (imaginaryMin <= -1 || imaginaryMin >= 1 ) || imaginaryMin == imaginaryMax)
+	{
+		return false;
+	}
+	
+	if( ( imaginaryMax >= -1 && imaginaryMax <= 1 ) && imaginaryMax != imaginaryMin )
+	{
+			
+			this-> imaginaryMax = imaginaryMax;
+			return true;
+	}
+		
+	else if( (imaginaryMax <= -1 || imaginaryMax >= 1 ) || imaginaryMax == imaginaryMin)
+	{
+		return false;
+	}
+	
+	else
+	{
+		return false;
+	}
+	
+}
