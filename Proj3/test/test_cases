@@ -1,0 +1,26 @@
+  // this is suggested usage; your methods can be written differently but should reproduce the same images
+  RegionGrower r;
+
+  //set the background: green
+  r.SetSeed(0,0);
+  r.SetReplacement({88, 96, 26, 255});
+  r.SetImage(std::string("hokie.png"));
+  r.GetOutput(std::string("hokie_bg.png"));
+
+  //set the chest: blue
+  r.SetSeed(350,350);
+  r.SetReplacement({10, 35, 63, 255});
+  r.SetImage(std::string("hokie_bg.png"));
+  r.GetOutput(std::string("hokie_chest.png"));
+
+  //set the legs: metallic gold
+  r.SetSeed(350,450);
+  r.SetReplacement({176, 144, 67, 255});
+  r.SetImage(std::string("hokie_chest.png"));
+  r.GetOutput(std::string("hokie_legs.png"));
+
+  //set the head:  gold
+  r.SetSeed(125,315);
+  r.SetReplacement({201, 151, 44, 255});
+  r.SetImage(std::string("hokie_legs.png"));
+  r.GetOutput(std::string("hokie_cool.png"));
